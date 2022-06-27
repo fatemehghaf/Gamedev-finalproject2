@@ -14,7 +14,7 @@ public class StarManagment : MonoBehaviour
 
     void Update()
     {
-        stars.text = PlayerPrefs.GetInt("Stars" , 0).ToString();
+        stars.text = "Star: " + PlayerPrefs.GetInt("Stars" , 0).ToString();
     }
 
     public void AddStar(){

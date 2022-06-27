@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public float speed = 5;
     private Rigidbody2D rb;
     public float jump = 7;
+    
 
     private bool isgrounded = false;
 
@@ -22,12 +23,19 @@ public class Player : MonoBehaviour
     //public GameObject fire;
 
     public GameObject camera;
+
+    //heart
+    int playerHealth=3;
+    public GameObject[] heart;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rotation = transform.eulerAngles;
         sm = GameObject.FindGameObjectWithTag("Text").GetComponent<StarManagment>();
+        playerHealth = heart.Length; //heart
     }
 
     
@@ -63,6 +71,10 @@ public class Player : MonoBehaviour
             isgrounded = false;
         }
 
+        if(Input.GetKeyDown(KeyCode.A)){
+            playerAttack();
+        }
+
         camera.transform.position = new Vector3(transform.position.x , 0 , -10);
 
     }
@@ -71,10 +83,7 @@ public class Player : MonoBehaviour
             isgrounded=true;
         }
         if(collision.gameObject.tag == "Enemy"){
-            //Instantiate(fire, transform.position , Quaternion.identity);
-            panel.SetActive(true); 
-            Destroy(gameObject);
-            //FindObjectOfType<AudioManager>().Play("Die");
+            HeartDecrease();
         }
     }
     private void OnTriggerEnter2D(Collider2D other){
@@ -86,22 +95,29 @@ public class Player : MonoBehaviour
         }
         
         if(other.gameObject.tag == "Monster"){
-            //Instantiate(fire, transform.position , Quaternion.identity);
-            panel.SetActive(true); 
-            Destroy(gameObject);
-            //FindObjectOfType<AudioManager>().Play("Die");
+            HeartDecrease();
         }
         
-        if(other.gameObject.tag == "Spike"){
-
-            panel.SetActive(true); 
-            Destroy(gameObject);
-            //FindObjectOfType<AudioManager>().Play("Coin");
-        }
+        
 
         if(other.gameObject.tag == "Finish"){
             Destroy(gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+    }
+
+    public void playerAttack(){
+        anim.SetTrigger("playerAttack");
+    }
+
+    public void HeartDecrease(){
+        playerHealth--;
+            if(playerHealth <= 0){
+            //Instantiate(fire, transform.position , Quaternion.identity);
+            panel.SetActive(true); 
+            Destroy(gameObject);
+            //FindObjectOfType<AudioManager>().Play("Die");
+            }
+            Destroy(heart[playerHealth].gameObject);
     }
 }
