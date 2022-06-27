@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - Text
   - star
+  - upKill
+  - Flag
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Enemies
   - 
   - 
   - 

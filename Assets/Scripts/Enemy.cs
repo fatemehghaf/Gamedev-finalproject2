@@ -9,18 +9,21 @@ public class Enemy : MonoBehaviour
     public float links;
     private Vector3 rotation;
 
-
+    private Animator animC;
    
+//hit
+    public int maxhealth;
+    int currentHealth;
 
     void Start()
     {
         velocity = transform.position.x + velocity;
         links = transform.position.x - links;
+        animC = GetComponent<Animator>();
 
-        
+        currentHealth = maxhealth;
     }
 
-    
 
     // Update is called once per frame
     void Update()
@@ -37,8 +40,20 @@ public class Enemy : MonoBehaviour
         }
 
     }
+public void TakeDamage(int damage){
+        currentHealth -= damage;
 
+        if(currentHealth <= 0){
+            EnemyDie();
+        }
+    }
     void EnemyDie(){
-        
+        speed=0;
+        Debug.Log("Enemy died");
+        animC.SetTrigger("EnemycDead");
+        Invoke("DestroyEnemy", 0.8f); 
+    }
+    void DestroyEnemy(){
+        Destroy(gameObject);
     }
 }

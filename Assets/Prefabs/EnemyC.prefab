@@ -103,6 +103,7 @@ MonoBehaviour:
   speed: 2
   velocity: 3
   links: 2
+  maxhealth: 20
 --- !u!61 &4459013451510013546
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -27,14 +27,16 @@ public class Player : MonoBehaviour
     //attack
     public Transform attackPoint;
     public float attackRange = 0.5f;
+    public int attackDamage = 20;
     public LayerMask enemyLayers;
+    
 
     
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();//!
         rotation = transform.eulerAngles;
         sm = GameObject.FindGameObjectWithTag("Text").GetComponent<StarManagment>();
         playerHealth = heart.Length; //heart
@@ -129,7 +131,8 @@ public class Player : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("Vincenzo "+enemy.name);
+            enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+            Debug.Log("Vincenzo hit "+enemy.name);
         }
     }
 
