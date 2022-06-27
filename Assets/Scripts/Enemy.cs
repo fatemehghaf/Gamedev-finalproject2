@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public float velocity;
     public float links;
     private Vector3 rotation;
+    public bool Act = false;
 
     private Animator animC;
    
@@ -38,7 +39,15 @@ public class Enemy : MonoBehaviour
         if(transform.position.x > velocity){
             transform.eulerAngles = rotation;
         }
+        if(Act==true){
+            transform.eulerAngles = rotation - new Vector3(0,180,0);
+        }
 
+    }
+    private void OnTriggerEnter2D(Collider2D collider){
+        if(collider.gameObject.tag == "Valley"){
+            DestroyEnemy();
+        }
     }
 public void TakeDamage(int damage){
         currentHealth -= damage;

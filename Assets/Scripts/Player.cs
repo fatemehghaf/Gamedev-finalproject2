@@ -97,9 +97,6 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
             //FindObjectOfType<AudioManager>().Play("Coin");
         }
-        if(other.gameObject.tag == "upKill"){
-            Destroy(other.gameObject);
-        }
         else if(other.gameObject.tag == "Monster"){   
             HeartDecrease();
         }
