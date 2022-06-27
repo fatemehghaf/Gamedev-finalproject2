@@ -20,7 +20,7 @@ public class BtnManager : MonoBehaviour
         SceneManager.LoadScene("Level1");
     }
      public void Restart(){
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void MainMenu(){
         SceneManager.LoadScene("MainMenu");

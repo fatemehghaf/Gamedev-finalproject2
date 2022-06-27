@@ -8,12 +8,19 @@ public class Enemy : MonoBehaviour
     public float velocity;
     public float links;
     private Vector3 rotation;
-    // Start is called before the first frame update
+
+
+   
+
     void Start()
     {
         velocity = transform.position.x + velocity;
         links = transform.position.x - links;
+
+        
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -29,5 +36,9 @@ public class Enemy : MonoBehaviour
             transform.eulerAngles = rotation;
         }
 
+    }
+
+    void EnemyDie(){
+        
     }
 }

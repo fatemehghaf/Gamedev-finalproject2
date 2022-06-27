@@ -13,21 +13,23 @@ public class Player : MonoBehaviour
     private bool isgrounded = false;
 
     private Animator anim;
-
     private Vector3 rotation;
-
     private StarManagment sm;
-
 
     public GameObject panel;
     //public GameObject fire;
-
     public GameObject camera;
 
     //heart
     int playerHealth=3;
     public GameObject[] heart;
 
+    //attack
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemyLayers;
+
+    
 
     void Start()
     {
@@ -93,24 +95,24 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
             //FindObjectOfType<AudioManager>().Play("Coin");
         }
-        
-        if(other.gameObject.tag == "Monster"){
+        if(other.gameObject.tag == "upKill"){
+            Destroy(other.gameObject);
+        }
+        else if(other.gameObject.tag == "Monster"){   
             HeartDecrease();
         }
-        
-        
-
-        if(other.gameObject.tag == "Finish"){
+        if(other.gameObject.tag == "Valley"){
+            Destroy(gameObject);
+            panel.SetActive(true); 
+        }
+        if(other.gameObject.tag == "Flag"){
             Destroy(gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
-    public void playerAttack(){
-        anim.SetTrigger("playerAttack");
-    }
-
     public void HeartDecrease(){
+        anim.SetTrigger("playerHurt");
         playerHealth--;
             if(playerHealth <= 0){
             //Instantiate(fire, transform.position , Quaternion.identity);
@@ -119,5 +121,23 @@ public class Player : MonoBehaviour
             //FindObjectOfType<AudioManager>().Play("Die");
             }
             Destroy(heart[playerHealth].gameObject);
+    }
+
+    public void playerAttack(){
+        anim.SetTrigger("playerAttack");
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange , enemyLayers);
+
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("Vincenzo "+enemy.name);
+        }
+    }
+
+    void OnDrawGizmosSelected(){
+        if(attackPoint == null)
+            return;
+
+            Gizmos.DrawWireSphere(attackPoint.position , attackRange);
+        
     }
 }
