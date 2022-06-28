@@ -9,16 +9,16 @@ public class StarManagment : MonoBehaviour
     public Text stars;
     void Start()
     {
-        starnum = PlayerPrefs.GetInt("StarSave" , 0);
+        starnum = PlayerPrefs.GetInt("StarSave1" , 0);
     }
 
     void Update()
     {
-        stars.text = "Star: " + PlayerPrefs.GetInt("StarSave" , 0).ToString();
+        stars.text = "Star: " + PlayerPrefs.GetInt("StarSave1" , 0).ToString();
     }
 
     public void AddStar(){
         starnum++;
-        PlayerPrefs.SetInt("StarSave" , starnum);
+        PlayerPrefs.SetInt("StarSave1" , starnum);
     }
 }

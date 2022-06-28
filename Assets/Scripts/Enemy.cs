@@ -61,7 +61,7 @@ public void TakeDamage(int damage){
         //speed=0;
         Debug.Log("Enemy died");
         animC.SetTrigger("EnemycDead");
-        Invoke("DestroyEnemy", 0.5f); 
+        Invoke("DestroyEnemy", 0.2f); 
     }
     void DestroyEnemy(){
         Destroy(gameObject);
