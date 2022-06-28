@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class BtnManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject infoPanel;
+    public GameObject mainPanel;
+
+    public GameObject overLay1;
+    public GameObject overLay2;
+    public GameObject overLay3;
+
     void Start()
     {
         
@@ -24,6 +30,36 @@ public class BtnManager : MonoBehaviour
     }
     public void MainMenu(){
         SceneManager.LoadScene("MainMenu");
+    }
+    public void QuitGame(){
+        Application.Quit();
+    }
+    public void LevelMenu(){
+        Application.Quit();
+    }
+    public void SoundBtn(){
+        Application.Quit();
+    }
+    public void InfoBtn(){
+        mainPanel.SetActive(false); 
+        infoPanel.SetActive(true);
+        overLay1.SetActive(true);
+    }
+
+    public void firstPageClick(){
+        overLay1.SetActive(false);
+        overLay2.SetActive(true);
+        overLay3.SetActive(false);
+    }
+    public void SeconndPageClick(){
+        overLay1.SetActive(false);
+        overLay2.SetActive(false);
+        overLay3.SetActive(true);
+    }
+    public void thirdPageClick(){
+        overLay3.SetActive(false);
+        infoPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 
 }
