@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour
         }
     }
 public void TakeDamage(int damage){
+        speed=0;
         currentHealth -= damage;
 
         if(currentHealth <= 0){
@@ -57,10 +58,10 @@ public void TakeDamage(int damage){
         }
     }
     void EnemyDie(){
-        speed=0;
+        //speed=0;
         Debug.Log("Enemy died");
         animC.SetTrigger("EnemycDead");
-        Invoke("DestroyEnemy", 0.8f); 
+        Invoke("DestroyEnemy", 0.5f); 
     }
     void DestroyEnemy(){
         Destroy(gameObject);

@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private StarManagment sm;
 
     public GameObject panel;
-    //public GameObject fire;
+    
     public GameObject camera;
 
     //heart
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();//!
+        anim = GetComponent<Animator>();
         rotation = transform.eulerAngles;
         sm = GameObject.FindGameObjectWithTag("Text").GetComponent<StarManagment>();
         playerHealth = heart.Length; //heart
@@ -89,15 +89,25 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Enemy"){
             HeartDecrease();
         }
+        if(collision.gameObject.tag == "Vivi"){
+
+            panel.SetActive(true);
+            FindObjectOfType<AudioManager>().Play("Victory");
+            Invoke("LoadMainMenu", 3);
+        }
     }
     private void OnTriggerEnter2D(Collider2D other){
 
         if(other.gameObject.tag == "star"){
             sm.AddStar();
+            FindObjectOfType<AudioManager>().Play("Star");
             Destroy(other.gameObject);
-            //FindObjectOfType<AudioManager>().Play("Coin");
+            
         }
-        else if(other.gameObject.tag == "Monster"){   
+        if(other.gameObject.tag == "Monster"){   
+            HeartDecrease();
+        }
+        if(other.gameObject.tag == "Spike"){   
             HeartDecrease();
         }
         if(other.gameObject.tag == "Valley"){
@@ -108,22 +118,24 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+        
     }
 
     public void HeartDecrease(){
+        FindObjectOfType<AudioManager>().Play("playerHurt");
         anim.SetTrigger("playerHurt");
         playerHealth--;
             if(playerHealth <= 0){
-            //Instantiate(fire, transform.position , Quaternion.identity);
+            FindObjectOfType<AudioManager>().Play("GameOver");
             panel.SetActive(true); 
             Destroy(gameObject);
-            //FindObjectOfType<AudioManager>().Play("Die");
             }
             Destroy(heart[playerHealth].gameObject);
     }
 
     public void playerAttack(){
         anim.SetTrigger("playerAttack");
+        FindObjectOfType<AudioManager>().Play("Sword");
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange , enemyLayers);
 
         foreach (Collider2D enemy in hitEnemies)
@@ -139,5 +151,9 @@ public class Player : MonoBehaviour
 
             Gizmos.DrawWireSphere(attackPoint.position , attackRange);
         
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
